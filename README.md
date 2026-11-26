@@ -3,7 +3,7 @@
 This repo contains my custom skills and my favorite skills from others.
 
 
-the following principles are adapted from pstack:
+the following principles and other skills are adapted from pstack:
 * `principle-attack-the-premise`
 * `principle-boundary-discipline`
 * `principle-build-the-lever`
@@ -28,3 +28,16 @@ the following principles are adapted from pstack:
 * `principle-subtract-before-you-add`
 * `principle-test-behavior-not-implementation`
 * `principle-type-system-discipline`
+* `maintain-verification-skill`
+* `create-verification-skill`
+
+my own principles:
+* `principle-decompose-tasks`
+* `principle-extensive-verification`
+* `principle-incremental-verification`
+* `principle-never-weaken-a-check`
+* `principle-prefer-visual-verification`
+
+
+The following skills are adapted from Mat Pocock's skills:
+* `grill-with-docs`

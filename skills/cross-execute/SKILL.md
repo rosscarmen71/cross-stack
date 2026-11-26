@@ -14,6 +14,11 @@ GOALS:
 
 STEPS:
 
+## 0. Specify Agents and Atonomy
+
+This is where you would specify the settings for like the judge agent, for example, where you would specify the model you wanted to use in any particular non-standard requirements for a cross-judge-chef agent that you want, ect. They should also be where you were explicitly asked about, for example what to do if a dispute remains or arises, if you don't specify, it'll use the default for the agent which will I'll want to make it so that just keeps trying to handle it and it uses primarily skills from potato stack which I will add to shift. It's focused towards fixing whatever bugger dispute there is. But for example, like if you wanna be really conservative involved in the number of tokens, you use you could specify at the beginning that like you don't want it to keep retry and you want to contact you the second there's a problem and take a pause, etc., rather than the standard of trying to figure it out by itself.
+... # TODO
+
 ## 1. Identify The Plan or Task
 
 GOALS: 
@@ -26,22 +31,20 @@ STEPS:
 2. Identify and explicitly confirmed with the user the ID of the plan or task that is to be executed is correct.
 3. Update the state of the plan and or task/s to `in progress`.
 
-## 2. Create The Verification Layer
+## 2. Update The Verification Layer
+
+GOALS:
+* Create or expand an existing cross style verification layer for the current project corresponding to the plan and or task being executed.
+
+STEPS: 
+0. get the **path/s from the root folder of the project to the `plan` and or `tasks`** of the plan and or task that is being executed.
+1. Run the `/cross-verification` skill. **Input the list of path/s identifyed in step 0, and the agent and autonomy settings from step 0 of this skill.**
+
+## 3. Execute The Plan
 
 GOALS:
 
-NON-NEGOTIABLE PRINCIPLES:
-
-Read the instructions for finding `principle-*` skills and engaging them [here](#principles). **Throughout the entirety of the step engage the following principles:**
-* `/principle-extensive-verification`
-* `/principle-increment-verification`
-* `/principle-prefer-visual-verification`
-
-
 STEPS: 
-
-
-## 3. Execute The Plan
 
 ## 4. Verify and Improve Loop
 
