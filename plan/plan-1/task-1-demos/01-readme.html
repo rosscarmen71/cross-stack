@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>README Preview</title>
+<style>
+:root{--bg:#ffffff;--fg:#1f2328;--muted:#59636e;--border:#d1d9e0;--code:#f6f8fa;--link:#0969da;--box:#ddf4ff;--box2:#fff8c5;--box3:#dafbe1;--stroke:#1f2328;--banner:#fff8c5}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1117;--fg:#e6edf3;--muted:#9198a1;--border:#3d444d;--code:#151b23;--link:#4493f8;--box:#0c2d6b;--box2:#4b3a00;--box3:#033a16;--stroke:#e6edf3;--banner:#3b2e00}}
+:root[data-theme="dark"]{--bg:#0d1117;--fg:#e6edf3;--muted:#9198a1;--border:#3d444d;--code:#151b23;--link:#4493f8;--box:#0c2d6b;--box2:#4b3a00;--box3:#033a16;--stroke:#e6edf3;--banner:#3b2e00}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
+.banner{background:var(--banner);border-bottom:1px solid var(--border);padding:8px 16px;font-size:14px}
+.wrap{max-width:900px;margin:24px auto;padding:0 16px}
+.file{border:1px solid var(--border);border-radius:6px}
+.filehead{padding:8px 16px;border-bottom:1px solid var(--border);font-weight:600;font-size:14px}
+.md{padding:32px}
+h1,h2{border-bottom:1px solid var(--border);padding-bottom:.3em}
+h1{font-size:2em;margin-top:0}h2{font-size:1.5em;margin-top:1.5em}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+code{background:var(--code);padding:.2em .4em;border-radius:6px;font-size:85%;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+pre{background:var(--code);padding:16px;border-radius:6px;overflow:auto;font-size:85%;line-height:1.45}
+pre code{background:none;padding:0;font-size:100%}
+table{border-collapse:collapse;width:100%;display:block;overflow:auto}
+th,td{border:1px solid var(--border);padding:6px 13px;text-align:left;vertical-align:top}
+tr:nth-child(2n){background:var(--code)}
+svg{max-width:100%;height:auto;display:block;margin:8px auto}
+svg text{fill:var(--fg);font:13px -apple-system,Segoe UI,sans-serif}
+svg .b1{fill:var(--box);stroke:var(--stroke)}svg .b2{fill:var(--box2);stroke:var(--stroke)}svg .b3{fill:var(--box3);stroke:var(--stroke)}
+svg line,svg path{stroke:var(--stroke);fill:none}
+.note{color:var(--muted);font-size:14px}
+@media (max-width:600px){.md{padding:16px}}
+</style>
+</head>
+<body>
+<div class="banner"><strong>Demo:</strong> preview of the new <code>README.md</code> as it would render on GitHub. Diagrams will be Mermaid in the real file, so GitHub draws them.</div>
+<div class="wrap"><div class="file"><div class="filehead">README.md</div><div class="md">
+
+<h1>Cross Skills</h1>
+<p>Claude Code skills that turn a vague request into an approved, verifiable plan by questioning you before anything is built.<br>
+The main skill is <code>/cross-plan</code>. It questions you about <em>what</em> you want, shows you demos of the result, then plans <em>how</em> to build it as small, checkable <a href="#">Tasks</a>.<br>
+The other skills are the interviews <code>/cross-plan</code> uses, and you can run each one on its own.</p>
+
+<h2>Skills</h2>
+<table>
+<tr><th>Skill</th><th>What it does</th></tr>
+<tr><td><a href="#"><code>/cross-plan</code></a></td><td>Turns a request into an approved plan: what you want, <a href="#">demos</a> of the result, the gap from today's code, how to close it, Tasks, and rules for when things go wrong. Planning only. It never builds anything.</td></tr>
+<tr><td><a href="#"><code>/grill-what</code></a></td><td>Questions you about what you want and what "done" means. Never asks how.</td></tr>
+<tr><td><a href="#"><code>/grill-how</code></a></td><td>Questions you about how an already-defined request should be built, recommending options that fit your project's existing patterns. Never asks what.</td></tr>
+<tr><td><a href="#"><code>/grill-non-negotiables</code></a></td><td>Finds your <a href="#">non-negotiables</a> and pushes each one until it's specific enough to check.</td></tr>
+<tr><td><a href="#"><code>/grill-what-with-docs</code></a></td><td><code>/grill-what</code>, plus recording terms in a glossary and decisions in ADRs as you go.</td></tr>
+<tr><td><a href="#"><code>/grill-how-with-docs</code></a></td><td><code>/grill-how</code>, plus recording terms in a glossary and decisions in ADRs as you go.</td></tr>
+</table>
+<p><strong>Planned</strong> (these folders are empty placeholders for now): <code>cross-mode</code>, <code>find-standard</code>, <code>just-show-me</code>, <code>planning-and-verification</code>, <code>research-options</code>, and 12 <code>principle-*</code> skills.</p>
+
+<h2>How the skills fit together</h2>
+<p>Which skill calls which:</p>
+<svg viewBox="0 0 760 250" role="img" aria-label="cross-plan calls grill-what, grill-how-with-docs, grill-non-negotiables and grill-how; the with-docs skills call their base skill plus domain-modeling">
+ <rect class="b1" x="300" y="10" width="160" height="36" rx="6"/><text x="380" y="33" text-anchor="middle">/cross-plan</text>
+ <rect class="b2" x="10" y="100" width="150" height="36" rx="6"/><text x="85" y="123" text-anchor="middle">/grill-what</text>
+ <rect class="b2" x="200" y="100" width="180" height="36" rx="6"/><text x="290" y="123" text-anchor="middle">/grill-how-with-docs</text>
+ <rect class="b2" x="420" y="100" width="190" height="36" rx="6"/><text x="515" y="123" text-anchor="middle">/grill-non-negotiables</text>
+ <rect class="b2" x="640" y="100" width="110" height="36" rx="6"/><text x="695" y="123" text-anchor="middle">/grill-how</text>
+ <rect class="b2" x="10" y="200" width="190" height="36" rx="6"/><text x="105" y="223" text-anchor="middle">/grill-what-with-docs</text>
+ <rect class="b3" x="300" y="200" width="160" height="36" rx="6"/><text x="380" y="223" text-anchor="middle">domain-modeling †</text>
+ <path d="M340 46 L85 100"/><path d="M370 46 L290 100"/><path d="M400 46 L515 100"/><path d="M440 46 L695 100"/>
+ <path d="M290 136 L380 200"/><path d="M350 136 L350 166 L695 166 L695 136" stroke-dasharray="4 3"/>
+ <path d="M105 200 L85 136"/><path d="M200 218 L300 218"/>
+</svg>
+<p class="note">† third-party skill by Matt Pocock (see below).</p>
+
+<p>What <code>/cross-plan</code> does, step by step:</p>
+<svg viewBox="0 0 760 120" role="img" aria-label="cross-plan steps 0 to 6">
+ <g>
+  <rect class="b1" x="0" y="10" width="100" height="56" rx="6"/><text x="50" y="34" text-anchor="middle">0. Setup</text><text x="50" y="52" text-anchor="middle" class="note">plan file</text>
+  <rect class="b1" x="110" y="10" width="100" height="56" rx="6"/><text x="160" y="34" text-anchor="middle">1. What</text><text x="160" y="52" text-anchor="middle" class="note">/grill-what</text>
+  <rect class="b1" x="220" y="10" width="100" height="56" rx="6"/><text x="270" y="34" text-anchor="middle">2. Delta</text><text x="270" y="52" text-anchor="middle" class="note">read the code</text>
+  <rect class="b1" x="330" y="10" width="100" height="56" rx="6"/><text x="380" y="30" text-anchor="middle">3. How</text><text x="380" y="46" text-anchor="middle" class="note">/grill-how-…</text><text x="380" y="60" text-anchor="middle" class="note">/grill-non-neg…</text>
+  <rect class="b1" x="440" y="10" width="100" height="56" rx="6"/><text x="490" y="34" text-anchor="middle">4. Roadmap</text><text x="490" y="52" text-anchor="middle" class="note">Tasks</text>
+  <rect class="b1" x="550" y="10" width="100" height="56" rx="6"/><text x="600" y="30" text-anchor="middle">5. Problem</text><text x="600" y="46" text-anchor="middle">rules</text><text x="600" y="60" text-anchor="middle" class="note">/grill-how</text>
+  <rect class="b3" x="660" y="10" width="100" height="56" rx="6"/><text x="710" y="34" text-anchor="middle">6. Approve</text><text x="710" y="52" text-anchor="middle" class="note">you sign off</text>
+ </g>
+ <text x="380" y="100" text-anchor="middle" class="note">Demos are shown to you and revised in steps 1, 4 and 6. Nothing moves on without your approval.</text>
+</svg>
+
+<h2>Example</h2>
+<pre><code>/cross-plan add dark mode to the settings page</code></pre>
+<p>After you approve, your project has:</p>
+<pre><code>plan/
+├── plan-&lt;id&gt;.md          ← the plan
+└── plan-&lt;id&gt;/
+    ├── demos/             ← demos of the final result
+    ├── task-&lt;n&gt;.md        ← one Sub-plan per Task
+    └── task-&lt;n&gt;-demos/    ← that Task's demos</code></pre>
+<p>Hand that folder to any executor agent to build.</p>
+
+<h2>Install</h2>
+<p>Claude Code loads skills from <code>~/.claude/skills/</code>. Link these in (links mean your edits apply immediately):</p>
+<pre><code>git clone https://github.com/rosscarmen71/cross-stack.git
+cd cross-stack
+mkdir -p ~/.claude/skills
+for s in cross-plan grill-what grill-what-with-docs grill-how grill-how-with-docs grill-non-negotiables; do
+  ln -s "$PWD/skills/$s" ~/.claude/skills/$s
+done
+ln -s "$PWD/skills/third-party/matt_pocock/domain-modeling" ~/.claude/skills/domain-modeling</code></pre>
+<p>Start a new Claude Code session and type <code>/cross-plan</code>.</p>
+
+<h2>Repo layout</h2>
+<pre><code>.
+├── README.md
+├── GLOSSARY.md                    ← terms used by the skills (Task, Sub-plan, Demo, …)
+└── skills/
+    ├── cross-plan/                ← the main skill
+    │   ├── templates/             ← plan, Sub-plan and demo-playbook templates
+    │   └── playbooks-demos/       ← how to make each kind of demo (prototype, slides, video, spec)
+    ├── grill-what/  grill-how/  grill-non-negotiables/  …   ← the interview skills
+    ├── &lt;planned&gt;/                 ← empty placeholder folders
+    └── third-party/               ← skills by others, with their licenses
+        ├── matt_pocock/
+        └── pstack/</code></pre>
+
+<h2>Terms</h2>
+<p>Words like <em>Task</em>, <em>Sub-plan</em>, <em>Demo</em> and <em>Non-negotiable</em> have exact meanings here. See <a href="#">GLOSSARY.md</a>.</p>
+
+<h2>Third-party skills</h2>
+<ul>
+<li><strong>Matt Pocock</strong>: <code>grilling</code>, <code>grill_me</code>, <code>grill-with-docs</code>, <code>domain-modeling</code>. MIT, see <a href="#">license</a>.</li>
+<li><strong>pstack</strong> by Lauren Tan: 24 <code>principle-*</code> skills. MIT, see <a href="#">license</a>.</li>
+</ul>
+
+</div></div></div>
+</body>
+</html>

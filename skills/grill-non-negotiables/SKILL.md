@@ -1,7 +1,6 @@
 ---
 name: grill-non-negotiables
 description: Interrogate the user to uncover every non-negotiable in a request, plan, design or task, and push each one until it is as specific and measurable as the user will agree to.
-disable-model-invocation: true
 ---
 
 Given an input of a request, plan, design or task, interview the user relentlessly until every possible non-negotiable has been found and made as specific and measurable as the user will agree to. Map this as a **design tree**: every decision branches into potential non-negotiables the user may have but has not yet thought of or specified.

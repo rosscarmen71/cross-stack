@@ -1,7 +1,6 @@
 ---
 name: grill-what
 description: Interrogate the user relentlessly about what they want from a request, plan or idea, and what it means for it to be done successfully. Never asks how.
-disable-model-invocation: true
 ---
 
 Interview the user relentlessly until you reach a shared understanding. Map this as a **design tree**: every decision branches into the decisions that hang off it.
