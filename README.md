@@ -30,6 +30,10 @@ the following principles and other skills are adapted from pstack:
 * `principle-type-system-discipline`
 * `maintain-verification-skill`
 * `create-verification-skill`
+* `architect`
+* `arena`
+* `why`
+* `tdd`
 
 my own principles:
 * `principle-decompose-tasks`
@@ -41,3 +45,4 @@ my own principles:
 
 The following skills are adapted from Mat Pocock's skills:
 * `grill-with-docs`
+* `domain-modeling`

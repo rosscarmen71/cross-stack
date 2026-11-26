@@ -44,6 +44,22 @@ _Avoid_: artifact, log
 The file in the `Verification Layer` that lists every `final verification` item of a plan and its `Tasks`, with the `Checks` that prove it and where their `Evidence` lands.
 _Avoid_: traceability matrix, test plan
 
+**Execution Stream**:
+An ordered sequence of whole `Tasks`, plan-level work, `Check` runs and utility work that one executor carries out in turn. Streams run in parallel where the Road Map allows and merge where work depends on more than one of them.
+_Avoid_: workstream, lane, track
+
+**Stream Entry**:
+One element of an `Execution Stream`: a whole `Task`, a `Check` run, plan-level work or utility work, which may wait on entries in other streams.
+_Avoid_: step, stream task, stream item
+
+**Entry Label**:
+The single tag a `Stream Entry` may carry to name its kind of work: `plan`, `task`, `verification` or `utility`.
+_Avoid_: global (use `plan`), local (use `task`), tag, category
+
+**Actionable Item**:
+One concrete piece of work that a `Task` or other stream work is broken into just before it is carried out, smaller than a `Task`.
+_Avoid_: to-do, todo, sub-task, step
+
 **Problem Solving Philosophy**:
 A plan's rules for how an executor handles problems during execution, such as repeated failures, regressions or scope creep. Anything the user doesn't specify falls back to the executor's default.
 _Avoid_: Emergency Strategy
