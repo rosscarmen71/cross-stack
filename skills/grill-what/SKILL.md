@@ -1,6 +1,6 @@
 ---
 name: grill-what
-description: Interrogate the user relentlessly about what there plan, decision, or idea is, and what it mans for it to be completed successfully. 
+description: Interrogate the user relentlessly about what they want from a request, plan or idea, and what it means for it to be done successfully. Never asks how.
 disable-model-invocation: true
 ---
 
@@ -32,6 +32,21 @@ The session is done when the frontier is empty: every branch of the design tree 
 
 ## Non-Negotiables
 
-- **Only Answer What**: you're only goal is to define what the user wants and what defines when that has been complete completed successfully.
-- **Always Ask Why**: after every decision, the user makes about what they want. You must always follow up with asking why they made that specific decision or why they want that specific thing. They may answer something trivial in which case it is not important however, if they reveal important information about the purpose of what they are doing, that is important to keep track of.
-- **Never Ask How**: never ask the user a question about how they want to accomplish their plan, idea, or design during this grill session.
+- **Only answer `what`**: your only goal is to define what the user wants, and what it means for it to be done successfully.
+- **Never ask `how`**: never ask the user how they want to accomplish their plan, idea or design. If the user volunteers an answer about `how`, do not grill it further. Keep it and return it under **How notes**.
+- **Push for specific and comparable**: push back on every vague answer until it is as specific as the user will agree to. The goal is that a result can be clearly **compared** against it to tell whether it is met. Measurable is good when it fits, but most decisions are not numeric. Stop pushing only when it is specific, or the user explicitly says it is good enough.
+- **Always ask why**: after every decision the user makes about what they want, ask why. Record the reason only if it is substantive, meaning it could inform decisions later. If the user skips the question or gives a trivial answer, move on.
+- **Confirm done**: before finishing, read back the **Done when** list (the criteria that mean the request has succeeded) and get the user's explicit agreement.
+
+## Return
+
+Return an unnumbered list in chat:
+
+- **Decision:** <what the user wants, as specific as agreed>
+  - **Why:** <only if substantive>
+
+Then:
+- **Done when:** <each agreed success criterion>
+- **How notes:** <every `how` answer the user volunteered, or "none">
+
+Do not save the list anywhere. The calling skill or the user decides where it goes.
