@@ -10,6 +10,10 @@ A Verification Layer is for use while building, not only at the end. Design Chec
 
 That requires modularity. A Check depends only on the behavior it asserts and the fixtures it sets up, never on another Check having run first or on the whole plan being complete. Group Checks by the Task and the `final verification` item they prove, name them so that group is selectable from the runner, and record the per-group run command in the Coverage Map.
 
-Then run them that way. Whenever a modular piece of code is believed done, run that piece's Checks before anything else builds on it. Where separately built pieces first meet, run the Checks of everything combined so far. Run the whole layer once at the end. Before every run, state which Checks should pass and which should still fail, and investigate a Check that passes early as seriously as one that fails late.
+Then run them that way. Place a verification point wherever a meaningful piece of work is complete, wherever separately built pieces first meet, and once at the end. Where the points go inside a piece of work is decided when that work is broken down, not fixed in advance.
+
+Every verification point works the same way. Before the work, record the Baseline: the Checks that pass now. Name the Target Checks: the ones this work should make pass, which may be none. After the work, run the Checks again and compare. Every Check in the Baseline should still pass, and every Target Check should now pass. A Baseline Check that stopped passing is acceptable only while the work is unfinished and the unfinished part is the cause. At the end of a piece of work nothing is excused. The result of each run is the Baseline for the next, so one run per verification point is enough.
+
+State only what must pass, never what should still fail. Pieces built in parallel finish in no fixed order, so a prediction that a Check still fails is wrong as often as it is right.
 
 The order in which Checks are written does not matter. What matters is that at every point during execution there is something runnable that answers "is what I have built so far correct?" for exactly the part that exists.

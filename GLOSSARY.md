@@ -40,25 +40,49 @@ _Avoid_: regression test, invariant test
 The stored output of one `Check` run that lets a human or an agent judge it without running it again.
 _Avoid_: artifact, log
 
+**Baseline**:
+The set of `Checks` that pass at a given moment, recorded before work starts so that the next run can show whether anything that passed has stopped passing.
+_Avoid_: snapshot, known-good set
+
+**Target Checks**:
+The `Checks` that a piece of work is expected to make pass once it is finished. A piece of work may have none.
+_Avoid_: expected passes, goal tests
+
 **Coverage Map**:
 The file in the `Verification Layer` that lists every `final verification` item of a plan and its `Tasks`, with the `Checks` that prove it and where their `Evidence` lands.
 _Avoid_: traceability matrix, test plan
 
-**Execution Stream**:
-An ordered sequence of whole `Tasks`, plan-level work, `Check` runs and utility work that one executor carries out in turn. Streams run in parallel where the Road Map allows and merge where work depends on more than one of them.
-_Avoid_: workstream, lane, track
+**Execution Queue**:
+The list of everything one run of a plan will carry out, where each entry names the entries it must wait for. An entry may start as soon as everything it waits for is done.
+_Avoid_: execution stream, workstream, lane, track
 
-**Stream Entry**:
-One element of an `Execution Stream`: a whole `Task`, a `Check` run, plan-level work or utility work, which may wait on entries in other streams.
-_Avoid_: step, stream task, stream item
+**Queue Entry**:
+One element of an `Execution Queue`: a whole `Task`, a `Check` run, plan-level work or utility work.
+_Avoid_: stream entry, step, queue task, queue item
 
 **Entry Label**:
-The single tag a `Stream Entry` may carry to name its kind of work: `plan`, `task`, `verification` or `utility`.
+The single tag a `Queue Entry` may carry to name its kind of work: `plan`, `task`, `verification` or `utility`.
 _Avoid_: global (use `plan`), local (use `task`), tag, category
 
 **Actionable Item**:
-One concrete piece of work that a `Task` or other stream work is broken into just before it is carried out, smaller than a `Task`.
+One concrete piece of work that a `Queue Entry` is broken into just before it is carried out, smaller than a `Task`.
 _Avoid_: to-do, todo, sub-task, step
+
+**Execution Playbook**:
+A pre-set method for breaking one kind of `Queue Entry` into `Actionable Items`, kept in the folder for its `Entry Label` and chosen by its `When To Use` section.
+_Avoid_: entry playbook, task playbook, verification playbook (these collide with `/cross-verification`'s own playbooks)
+
+**Execution Agent**:
+The agent that runs one plan's execution: it works through the `Execution Queue`, starts each entry when it is ready and is the only writer of the plan's shared files.
+_Avoid_: execute agent, orchestrator, stream coordinator
+
+**Execution Sub-agent**:
+An agent spawned by the `Execution Agent` to carry out one `task` entry together with its `verification` entry.
+_Avoid_: execute sub-agent, stream agent, worker
+
+**Judge**:
+A fresh agent that knows nothing of the reasoning of the agent whose work it examines. It runs `Checks` or reviews coverage and reports a verdict, and never changes what it examines.
+_Avoid_: reviewer, verifier, grader
 
 **Problem Solving Philosophy**:
 A plan's rules for how an executor handles problems during execution, such as repeated failures, regressions or scope creep. Anything the user doesn't specify falls back to the executor's default.
