@@ -36,7 +36,7 @@
 ## Permissions
 - <description> or <rule>
 
->Note: this section is optional if it is left empty or anything that is not specified here it's assumed just to use the default by whatever executor is running this plan. Things that would be included. Here would be if the user explicitly mentions that certain permissions are not allowed maybe there's a certain thing that you're not allowed to change. For example, it can also allow extra permissions like permissions that you typically would have to ask for maybe there's an explicit bypassing that the users is going to allow this information would go here if that were the case.
+>Note: the `permissions` field is optional. It covers only how the code may be edited: which files may be changed, what kinds of change are allowed, installing dependencies, destructive edits and similar. Record a permission here only if the user explicitly forbids something (for example a file that must not be changed) or explicitly allows something an executor would normally have to ask for. Anything not listed falls back to the executor's default. How work is shipped (commits, branches, pushing, PRs) never goes here: it is a Run Setting that belongs to the Execution Agent.
 
 
 
@@ -77,5 +77,5 @@
 - Task <task id>: <rule>
 - ...
 
->Note: the `problem solving philosophy` field contains the user's rules for handling problems during execution. It has one entry for each category asked about in step 5 (repeated failure, regression, demo can't be reached or looks wrong, scope creep, permissions, communication, undecided choices). If the user had no preference, the entry says `use the executor's default`. The defaults themselves are not defined here. Rules apply to the whole plan unless they start with a `Task` id, in which case they apply only to that `Task`.
+>Note: the `problem solving philosophy` field contains the user's rules for handling problems tied to this plan's own work. It has one entry for each category asked about in step 5 (regression, demo can't be reached or looks wrong, scope creep, permissions), plus any rule for a risky part of the work. If the user had no preference, the entry says `use the executor's default`. The defaults themselves are not defined here. How a run behaves in general (how often it retries, when it contacts the user, how it decides an open choice) never goes here: those are Run Settings that belong to the Execution Agent. Rules apply to the whole plan unless they start with a `Task` id, in which case they apply only to that `Task`.
 

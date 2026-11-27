@@ -10,7 +10,7 @@ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's a
 GOALS:
 * create an extensive verification layer for a cross style `plan` or individual `task` in the current project.
 * complete a `plan` for the current project successfuly
-* verify that the plan was completed successfully by a separate unbiased jury of agents and / or human.
+* verify that the plan was completed successfully, through fresh unbiased judge agents during execution and the user's approval at the end.
 
 ## Non-negotiables
 
@@ -42,18 +42,18 @@ The remaining triggers live only here:
 
 STEPS:
 
-## 0. Specify Agents and Atonomy
+## 0. Specify Agents And Autonomy
 
-This is where you would specify the settings for like the judge agent, for example, where you would specify the model you wanted to use in any particular non-standard requirements for a cross-judge-chef agent that you want, ect. They should also be where you were explicitly asked about, for example what to do if a dispute remains or arises, if you don't specify, it'll use the default for the agent which will I'll want to make it so that just keeps trying to handle it and it uses primarily skills from potato stack which I will add to shift. It's focused towards fixing whatever bugger dispute there is. But for example, like if you wanna be really conservative involved in the number of tokens, you use you could specify at the beginning that like you don't want it to keep retry and you want to contact you the second there's a problem and take a pause, etc., rather than the standard of trying to figure it out by itself.
-... # TODO
-... # TODO settings steps 3.1 and 3.2 read, each with a default:
-* agent cap: ask the user explicitly how many agents may run at once and tell them the default is 4. It counts Execution Sub-agents, their helpers and judges, not the Execution Agent.
-* models for the Execution Agent, the Execution Sub-agents and the judge.
-* merge approval: `human, non-blocking` (default; work continues on top of a merge that is still waiting for review), `human, blocking` or `none`.
-* whether this run checks merge approvals (default: no; review outcomes are handled by a later run).
-* shipping cadence and branching strategy. Per ADR 0002 these are set here, never in the plan. The Execution Playbooks carry them out.
-* whether to wait for the user after step 3.1 (default: no).
-* whether unfinished Tasks that selected Tasks depend on are added to the run (default: yes).
+GOALS:
+* The user has seen the Execution Agent's default Run Settings and said which ones to change for this run.
+* The user has set the agent cap explicitly.
+* The changes are ready to hand to the Execution Agent. Run Settings are written nowhere else (ADR 0004).
+
+STEPS:
+1. Read the default Run Settings from the `cross-execute-chef` agent definition (`agents/cross-execute-chef/AGENT.md`) and show them to the user as one table.
+2. Ask the user explicitly how many agents may run at once, and tell them the default.
+3. Ask once whether they want to change any other setting.
+4. Keep only the changes. They are passed to the Execution Agent when it is spawned in step 1, and it holds them for the whole run. Do not write them into the plan, the Execution Queue or any other file.
 
 ## 1. Identify The Plan or Task
 
@@ -64,9 +64,9 @@ GOALS:
 
 STEPS:
 1. The input for this skill should include identification of the task or full plan that is to be executed. If it was not provided in the input or was unclear in any way, ask the user for the plan or plan and task ID. Additionally, if it was unclear of the user wanted to complete an entire plan or just a task of a plan ask the user explicitly.
-2. Identify and explicitly confirmed with the user the ID of the plan or task that is to be executed is correct.
+2. Identify and explicitly confirmed with the user the ID of the plan or task that is to be executed is correct. When individual tasks were selected, also tell the user which unfinished tasks will run as well because the selected ones depend on them, directly or through other tasks. This is a notice, not a question.
 3. Update the state of the plan and or task/s to `in progress`.
-4. Hand over to the Execution Agent. Spawn `cross-execute-chef` as a background agent with the confirmed ids and the settings from step 0. It runs steps 2 to 5. The main agent runs none of them: it only passes the Execution Agent's questions to the user and resumes it with the answers.
+4. Hand over to the Execution Agent. Spawn `cross-execute-chef` as a background agent with the confirmed ids and the Run Settings changes from step 0. It runs steps 2 to 4. The main agent runs none of them: it only passes the Execution Agent's questions to the user and resumes it with the answers.
 
 ## 2. Update The Verification Layer
 
@@ -75,7 +75,7 @@ GOALS:
 
 STEPS: 
 0. get the **path/s from the root folder of the project to the `plan` and or `tasks`** of the plan and or task that is being executed.
-1. Spawn a sub-agent to run the `/cross-verification` skill, and keep only the summary it returns. **Input the list of path/s identifyed in step 0, and the agent and autonomy settings from step 0 of this skill.**
+1. Spawn a sub-agent to run the `/cross-verification` skill, and keep only the summary it returns. **Input the list of path/s identifyed in step 0 of this section, and the judge model and judge requirements from the Run Settings.**
 
 ## 3. Execute The Plan
 
@@ -96,16 +96,16 @@ GOALS:
 
 STEPS:
 1. **Read the state.** Open the plan, every Sub-plan in its Road Map, the Coverage Map, and the red-first result returned by step 2. For each Task, note its `Status`, its `depends-on`, whether its Checks passed in step 2's run, and anything about it in `road map evolution`. When only Tasks were selected, still read the parent plan.
-2. **Fix the scope.** Start from the plan or Tasks identified in step 1. Add every Task they depend on, directly or through other Tasks, that is not done, unless step 0 or the input says otherwise. A Task counts as done only if its status is `done` and its Checks passed in step 2's run. Leave done Tasks out of the queue.
+2. **Fix the scope.** Start from the plan or Tasks identified in step 1. Add every Task they depend on, directly or through other Tasks, that is not done. A Task counts as done only if its status is `done` and its Checks passed in step 2's run. Leave done Tasks out of the queue. Name every Task added this way in the summary of step 8 and in the final report.
 3. **Check for drift.** Skim the commits since the plan's `Date` that touch the file scope of any Task in scope. Only if a remaining Task's `How` can no longer be followed as written, because files, modules or APIs it names were removed, moved or rewritten, update that plan's or Sub-plan's `Current Delta` and add a dated line to `road map evolution` saying what changed. Ignore any smaller drift.
 4. **Check the Road Map.** Treat each Task's `depends-on` and parallel marking as given. If the Road Map contradicts itself or the state from step 1 (a dependency cycle, a Task with no Sub-plan, a status its Checks contradict), stop and handle it under the plan's `Problem Solving Philosophy`. Never redesign the plan in this step.
 5. **List the entries.** Apply `principle-decompose-tasks` to the Road Map, not to the Tasks: every Task in scope becomes one whole `task` entry, and breaking a Task into Actionable Items happens in step 3.2. Then add the other entries:
    * **`verification`:** apply `principle-incremental-verification` and `principle-sequence-verifiable-units`. Add one directly after every `task` entry, one before any Task that depends on two or more Tasks (covering those Tasks together), and one final entry after everything else (covering every Task in the run, which is the whole layer for a full-plan run). Each names its Target Checks by Task. The expected result is always the same: the Target Checks pass and nothing in the Baseline has stopped passing. Never write that a Check should still fail, because Tasks that run in parallel finish in no fixed order.
    * **`plan`:** for a full-plan run, add a reconcile after each verification entry that covers several Tasks (do the finished Tasks' notes in `road map evolution` change any later Task?) and one closing reconcile after the final verification entry (is every Task finished and is `road map evolution` complete?). Add or drop `plan` entries wherever that makes more sense for this plan. A run of selected Tasks has no `plan` entries; anything plan-level it runs into is reported from within its `task` entry.
-   * **`utility`:** only for work the step 0 settings ask for that is not plan, Task or verification work. Do not add entries for branches, worktrees, commits or PRs; the Execution Playbooks decide those.
+   * **`utility`:** only for work the Run Settings ask for that is not plan, Task or verification work. Do not add entries for branches, worktrees, commits or PRs; the Execution Playbooks decide those.
 
    Give every entry at most one Entry Label (`plan`, `task`, `verification` or `utility`). Never name a playbook; step 3.2 matches entries to playbooks.
-6. **Set the order.** Give every entry a `waits-for` list of the entries that must be done before it may start. Build it from the Road Map's `depends-on`, then add any other ordering the plan, the step 0 settings or the Execution Playbooks require. Step 3.2 starts an entry as soon as everything it waits for is done and follows no other order, so every ordering rule must be written here.
+6. **Set the order.** Give every entry a `waits-for` list of the entries that must be done before it may start. Build it from the Road Map's `depends-on`, then add any other ordering the plan, the Run Settings or the Execution Playbooks require. Step 3.2 starts an entry as soon as everything it waits for is done and follows no other order, so every ordering rule must be written here.
 7. **Write the queue file** to `plan/plan-<id>/execution-queue.md` as one table. An id is a letter for the label (`T` task, `V` verification, `P` plan, `U` utility, `E` no label) and a number. `run by` is `Execution Agent` for every `plan` entry and every `verification` entry that does not directly follow a `task` entry, and `sub-agent` for everything else. Every `status` starts as `pending`. For example:
 
    ```md
@@ -122,7 +122,7 @@ STEPS:
    | V5 | verification | Target Checks: every Task in the run | V4       | Execution Agent | pending |
    | P2 | plan         | closing reconcile                   | V5        | Execution Agent | pending |
    ```
-8. **Report and continue.** Give the path to the queue file and a one-paragraph summary of it, then go on to step 3.2. Wait for the user first only if the step 0 settings say to.
+8. **Report and continue.** Give the path to the queue file and a one-paragraph summary of it, then go on to step 3.2. Wait for the user first only if the Run Settings say to.
 
 ### 3.2. Run The Execution Queue
 
@@ -134,9 +134,9 @@ GOALS:
 RULES:
 * **One branch per Task.** Every `task` entry is executed on its own branch. How and when branches are created, merged and shipped is decided by the Execution Playbooks, never by this step.
 * **One writer.** Only the Execution Agent writes the queue file, the plan and Sub-plan files, and `road map evolution`. Every other agent reports to it instead.
-* **Statuses.** An entry is `pending`, `running`, `waiting`, `done`, `failed` or `skipped`. Tasks and the plan stay `in progress` throughout this step; `done` is set in step 5.
+* **Statuses.** An entry is `pending`, `running`, `waiting`, `done`, `failed` or `skipped`. Tasks and the plan stay `in progress` throughout this step; `done` is set in step 4.
 * **Independent verification** (ADR 0003). An agent that does the work never runs Checks and never opens the Verification Layer, the Coverage Map or the Evidence. It only receives a judge's verdict.
-* **Agent cap.** Never have more agents running at once than the cap from step 0. Execution Sub-agents, their helpers and judges all count. The Execution Agent does not.
+* **Agent cap.** Never have more agents running at once than the agent cap in the Run Settings. Execution Sub-agents, their helpers and judges all count. The Execution Agent does not.
 
 STEPS, for the Execution Agent:
 1. **Start what is ready.** An entry is ready when it is `pending` and every entry in its `waits-for` is `done`. Start ready entries in Road Map order, then queue order, as far as the agent cap allows, and mark each `running`. Follow no order other than `waits-for`.
@@ -183,7 +183,7 @@ Done by whichever agent runs the entry, just before running it.
 
 Apply `principle-incremental-verification`. Done by whichever agent has reached the verification.
 
-1. **Spawn a fresh judge** (`cross-judge-chef`, on the judge model from step 0). Use a new judge for every run.
+1. **Spawn a fresh judge** (`cross-judge-chef`, on the judge model in the Run Settings). Use a new judge for every run.
 2. **Brief it with facts and paths only**, never an explanation, reasoning or opinion of your own:
    * the paths to the plan, the Sub-plans involved, the Coverage Map and the Evidence folder;
    * the branch to run on;
@@ -196,10 +196,7 @@ Apply `principle-incremental-verification`. Done by whichever agent has reached 
    The judge never changes code or Checks.
 4. **Read only the verdict.** The Evidence of this run is the Baseline for the next run on this branch.
 
-## 4. Verify and Improve Loop
-... # TODO
-
-## 5. Wrap Up
+## 4. Wrap Up
 ... # TODO
 
 

@@ -19,6 +19,7 @@ Turn the user's request into a plan that an executor agent with no other context
 * **Modular `Tasks`.** Break the work into `Tasks` that can each be worked on and tested separately, with their own definition of done.
 * **The user approves.** The user approves every demo, the `Task` breakdown, every `Task`, and the final plan. Ask the user whenever a decision about `what` or `how` needs to be made.
 * **Never execute.** This skill ends at an approved plan. It never starts carrying the plan out.
+* **No Run Settings in the plan.** How work is shipped (commits, branches, pushing, PRs) and how a run behaves in general (how often it retries, when it contacts the user, how it decides an open choice) are Run Settings. They belong to the Execution Agent and are set when the plan is executed (ADRs 0002 and 0004). If the user brings one up, tell them so and leave it out of the plan.
 
 ## Output
 
@@ -62,7 +63,7 @@ GOALS:
 * Resolve a vague definition of `what` the user wants for the request.
 * Fill in the `goal` field and the "why the user wants this" part of the `why` field of the plan created in step 0.
 * Optional: Add any scope restrictions identified in this section to the `out of scope` field in the plan created in step 0.
-* Optional: Add any explicit permissions, or restrictions of permissions, mentioned by the user to the `permissions` field in the plan created in step 0.
+* Optional: Add any explicit permissions, or restrictions of permissions, that the user mentions about how the code may be edited to the `permissions` field in the plan created in step 0.
 
 STEPS:
 0. **Read the notes in the `permissions`, `out of scope`, `goal` and `why` sections of the plan template.**
@@ -89,7 +90,7 @@ GOALS:
 * Revise the demos that represent the intended behavior after the request is met, until the user is satisfied with each.
 * Fill in the "why this result" part of the `why` field of the plan created in step 0.
 * Optional: Add any scope restrictions identified in this section to the `out of scope` field in the plan created in step 0.
-* Optional: Add any explicit permissions, or restrictions of permissions, mentioned by the user to the `permissions` field in the plan created in step 0.
+* Optional: Add any explicit permissions, or restrictions of permissions, that the user mentions about how the code may be edited to the `permissions` field in the plan created in step 0.
 
 STEPS:
 1. Explicitly ask the user if they are satisfied with the demos from step 1.2, which are intended to show the final state when the request is satisfied.
@@ -108,7 +109,7 @@ GOALS:
 * Fill in the `final state` field and the `final verification` sub-field of the plan created in step 0.
 * Complete the "why this result" part of the `why` field of the plan created in step 0.
 * Optional: Add any scope restrictions identified in this section to the `out of scope` field in the plan created in step 0.
-* Optional: Add any explicit permissions, or restrictions of permissions, mentioned by the user to the `permissions` field in the plan created in step 0.
+* Optional: Add any explicit permissions, or restrictions of permissions, that the user mentions about how the code may be edited to the `permissions` field in the plan created in step 0.
 * All specifications and demos an executor agent needs to build a substantial verification layer for the plan are in the plan document, the demos, or other linked files.
 
 STEPS:
@@ -137,7 +138,7 @@ GOALS:
 * Create a clear definition of how the user wants to close the delta between the current state and the intended state. It should mainly consist of any specific requirements, directions or methods the user wants.
 * Identify every non-negotiable for both `what` and `how`, as specific and measurable as the user will agree to.
 * Optional: Add any scope restrictions identified in this section to the `out of scope` field in the plan created in step 0.
-* Optional: Add any explicit permissions, or restrictions of permissions, mentioned by the user to the `permissions` field in the plan created in step 0.
+* Optional: Add any explicit permissions, or restrictions of permissions, that the user mentions about how the code may be edited to the `permissions` field in the plan created in step 0.
 
 STEPS:
 
@@ -172,7 +173,7 @@ GOALS:
 * Fill in the `road map` field of the plan created in step 0.
 * Every item in the plan's `current delta` and `final verification` is covered by at least one `Task`.
 * Optional: Add any scope restrictions identified in this section to the `out of scope` field in the plan created in step 0.
-* Optional: Add any explicit permissions, or restrictions of permissions, mentioned by the user to the `permissions` field in the plan created in step 0.
+* Optional: Add any explicit permissions, or restrictions of permissions, that the user mentions about how the code may be edited to the `permissions` field in the plan created in step 0.
 
 STEPS:
 
@@ -244,11 +245,12 @@ STEPS:
 
 GOALS:
 * Fill in the `problem solving philosophy` field of the plan created in step 0.
-* Record the user's rules for handling problems that come up during execution, such as failing tests, demos that can't be reached, or unexpected complexity.
+* Record the user's rules for handling problems tied to this plan's own work, such as a regression, a demo that can't be reached, a fix that needs files outside a `Task`'s scope, or a risky `Task`.
+* Do **not** ask about how a run behaves in general: how often it retries, when it contacts the user, or how it decides an open choice. Those are Run Settings.
 * Every category in step 5.2 has either a rule from the user or the explicit line `use the executor's default`.
 * Do **not** define the defaults themselves, and do not try to cover every possible situation.
 * Optional: Add any scope restrictions identified in this section to the `out of scope` field in the plan created in step 0.
-* Optional: Add any explicit permissions, or restrictions of permissions, mentioned by the user to the `permissions` field in the plan created in step 0.
+* Optional: Add any explicit permissions, or restrictions of permissions, that the user mentions about how the code may be edited to the `permissions` field in the plan created in step 0.
 
 STEPS:
 
@@ -269,13 +271,10 @@ GOALS:
 
 STEPS:
 1. Run the **`/grill-how`** skill. Input the categories below, the risk-area questions from step 5.1, and all known context about `what` the plan must do and `how`. Ask about every category:
-   * **Repeated failure:** how many attempts at a failing test or demo before stopping or escalating.
    * **Regression:** what to do when a previous `Task`'s tests or demos break.
    * **Demo can't be reached or looks wrong:** what to do when the final state seems impossible, or a demo itself seems mistaken.
    * **Scope creep:** what to do when a fix needs files outside a `Task`'s file scope.
-   * **Permissions:** installing dependencies, network access, destructive commands, and similar.
-   * **Communication:** how often to notify or ask the user.
-   * **An undecided choice comes up during execution:** stop and ask, or decide and record why.
+   * **Permissions:** installing dependencies, network access, destructive commands, and similar. Never shipping.
 2. If the user has no preference for a category, record `use the executor's default` for it. Do not invent a rule.
 3. Rules apply to the whole plan by default. Only create a rule for a single `Task` if the user explicitly asks for one.
 

@@ -84,6 +84,10 @@ _Avoid_: execute sub-agent, stream agent, worker
 A fresh agent that knows nothing of the reasoning of the agent whose work it examines. It runs `Checks` or reviews coverage and reports a verdict, and never changes what it examines.
 _Avoid_: reviewer, verifier, grader
 
+**Run Settings**:
+The settings one `Execution Agent` runs with: which agents do the work, how many at once, how the run behaves when it is stuck, and how it ships. Each `Execution Agent` starts from its defaults and holds any changes the user asked for. They are never part of the plan.
+_Avoid_: agent and autonomy settings, settings block, config
+
 **Problem Solving Philosophy**:
-A plan's rules for how an executor handles problems during execution, such as repeated failures, regressions or scope creep. Anything the user doesn't specify falls back to the executor's default.
+A plan's rules for handling problems tied to its own work, such as regressions, scope creep or a risky `Task`. How a run behaves in general when it is stuck (retries, when to contact the user, undecided choices) belongs to the `Run Settings`.
 _Avoid_: Emergency Strategy
