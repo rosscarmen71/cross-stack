@@ -80,7 +80,10 @@ STEPS:
 ## 3. Execute The Plan
 
 GOALS:
-... # TODO
+* Carry out every Task in the run as its Sub-plan describes.
+* Have a fresh judge confirm that the Checks of every Task in the run pass and that nothing that passed before has stopped passing.
+* Stay within the plan's `out of scope` and `Permissions`.
+* Keep the Execution Queue and `road map evolution` true: what was done, what changed, and anything left unfinished with its reason.
 
 STEPS: 
 
@@ -97,7 +100,7 @@ STEPS:
 3. **Check for drift.** Skim the commits since the plan's `Date` that touch the file scope of any Task in scope. Only if a remaining Task's `How` can no longer be followed as written, because files, modules or APIs it names were removed, moved or rewritten, update that plan's or Sub-plan's `Current Delta` and add a dated line to `road map evolution` saying what changed. Ignore any smaller drift.
 4. **Check the Road Map.** Treat each Task's `depends-on` and parallel marking as given. If the Road Map contradicts itself or the state from step 1 (a dependency cycle, a Task with no Sub-plan, a status its Checks contradict), stop and handle it under the plan's `Problem Solving Philosophy`. Never redesign the plan in this step.
 5. **List the entries.** Apply `principle-decompose-tasks` to the Road Map, not to the Tasks: every Task in scope becomes one whole `task` entry, and breaking a Task into Actionable Items happens in step 3.2. Then add the other entries:
-   * **`verification`:** apply `principle-incremental-verification` and `principle-sequence-verifiable-units`. Add one directly after every `task` entry, one before any Task that depends on two or more Tasks (covering those Tasks together), and one final entry after everything else (covering the whole layer). Each names its Target Checks by Task. The expected result is always the same: the Target Checks pass and nothing in the Baseline has stopped passing. Never write that a Check should still fail, because Tasks that run in parallel finish in no fixed order.
+   * **`verification`:** apply `principle-incremental-verification` and `principle-sequence-verifiable-units`. Add one directly after every `task` entry, one before any Task that depends on two or more Tasks (covering those Tasks together), and one final entry after everything else (covering every Task in the run, which is the whole layer for a full-plan run). Each names its Target Checks by Task. The expected result is always the same: the Target Checks pass and nothing in the Baseline has stopped passing. Never write that a Check should still fail, because Tasks that run in parallel finish in no fixed order.
    * **`plan`:** for a full-plan run, add a reconcile after each verification entry that covers several Tasks (do the finished Tasks' notes in `road map evolution` change any later Task?) and one closing reconcile after the final verification entry (is every Task finished and is `road map evolution` complete?). Add or drop `plan` entries wherever that makes more sense for this plan. A run of selected Tasks has no `plan` entries; anything plan-level it runs into is reported from within its `task` entry.
    * **`utility`:** only for work the step 0 settings ask for that is not plan, Task or verification work. Do not add entries for branches, worktrees, commits or PRs; the Execution Playbooks decide those.
 
@@ -116,7 +119,7 @@ STEPS:
    | P1 | plan         | reconcile Tasks 7.1 and 7.2         | V3        | Execution Agent | pending |
    | T3 | task         | Task 7.3                            | P1        | sub-agent       | pending |
    | V4 | verification | Target Checks: Task 7.3             | T3        | sub-agent       | pending |
-   | V5 | verification | Target Checks: the whole layer      | V4        | Execution Agent | pending |
+   | V5 | verification | Target Checks: every Task in the run | V4       | Execution Agent | pending |
    | P2 | plan         | closing reconcile                   | V5        | Execution Agent | pending |
    ```
 8. **Report and continue.** Give the path to the queue file and a one-paragraph summary of it, then go on to step 3.2. Wait for the user first only if the step 0 settings say to.
@@ -193,16 +196,18 @@ Apply `principle-incremental-verification`. Done by whichever agent has reached 
    The judge never changes code or Checks.
 4. **Read only the verdict.** The Evidence of this run is the Baseline for the next run on this branch.
 
-
 ## 4. Verify and Improve Loop
+... # TODO
 
 ## 5. Wrap Up
+... # TODO
 
 
 
 
 
 ## Task Playbooks
+... # TODO
 
 ## Principles
 
